@@ -2,12 +2,13 @@ require 'httparty'
 require 'json'
 
 def listName
-  response = HTTParty.get('https://jsonplaceholder.typicode.com/users')
+  response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   i = 0
   name = []
+  puts '1 -'
 
-  while JSON.parse(response.body)[i] != nil
-    name.push(JSON.parse(response.body)[i]["name"])
+  while response[i] != nil
+    name.push(response[i]['name'])
     i = i + 1
   end
   name.sort.each do |name|
@@ -16,32 +17,30 @@ def listName
 end
 
 def listCity
-  response = HTTParty.get('https://jsonplaceholder.typicode.com/users')
+  response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   i = 0
+  puts '2 -'
 
-  while JSON.parse(response.body)[i] != nil
-    puts JSON.parse(response.body)[i]["address"]["city"]
+  while response[i] != nil
+    puts response[i]['address']['city']
     i = i + 1
   end
 end
 
 def listUserNameEndEmail
-  response = HTTParty.get('https://jsonplaceholder.typicode.com/users')
+  response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   i = 0
+  puts '3 -'
   
-  while JSON.parse(response.body)[i] != nil
-    email = JSON.parse(response.body)[i]["email"]
-    if /.biz/.match(email) != nil
-      print JSON.parse(response.body)[i]["username"]
-      print ' - '
-      puts email
+  while response[i] != nil
+    email = response[i]['email']
+    if /.biz/.match(email) 
+      puts "#{response[i]['username']} - #{email}"
     end
     i = i + 1
   end
 end
 
 listName()
-p '---------------------------'
 listCity()
-p '---------------------------'
 listUserNameEndEmail()
