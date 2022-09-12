@@ -1,8 +1,8 @@
 require 'httparty'
 require 'json'
 
+# class Infos
 class Infos
-
   def initialize
     @data = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   end

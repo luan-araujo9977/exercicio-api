@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-def listName
+def list_name
   response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   i = 0
   name = []
@@ -9,38 +9,36 @@ def listName
 
   while response[i] != nil
     name.push(response[i]['name'])
-    i = i + 1
+    i += 1
   end
-  name.sort.each do |name|
-    puts name
-  end
+  name.sort.each { |name| puts name }
 end
 
-def listCity
+def list_city
   response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
   i = 0
   puts '2 -'
 
   while response[i] != nil
     puts response[i]['address']['city']
-    i = i + 1
+    i += 1
   end
 end
 
-def listUserNameEndEmail
+def list_user_name_end_email
   response = JSON.parse(HTTParty.get('https://jsonplaceholder.typicode.com/users').body)
-  i = 0
   puts '3 -'
-  
+
+  i = 0
   while response[i] != nil
     email = response[i]['email']
-    if /.biz/.match(email) 
+    if /.biz/.match(email)
       puts "#{response[i]['username']} - #{email}"
     end
-    i = i + 1
+    i += 1
   end
 end
 
-listName()
-listCity()
-listUserNameEndEmail()
+list_name()
+list_city()
+list_user_name_end_email()
